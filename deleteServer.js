@@ -5,6 +5,9 @@ const mysql = require("mysql2");
 const app = express();
 app.use(bodyParser.json());
 
+const cors = require("cors");
+app.use(cors());
+
 const db = mysql.createConnection({
   host: "sql7.freesqldatabase.com",
   user: "sql7709039",

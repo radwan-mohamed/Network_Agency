@@ -47,7 +47,7 @@ app.listen(port, () => {
 });
 
 // Function to add an entry
-async function addEntry(name, age) {
+async function addEntryy(name, age) {
   try {
     const response = await axios.post("http://localhost:5000/add", {
       name,
@@ -60,7 +60,7 @@ async function addEntry(name, age) {
 }
 
 // Function to delete an entry
-async function deleteEntry(id) {
+async function deleteEntryy(id) {
   try {
     const response = await axios.delete("http://localhost:5001/delete", {
       data: { id },
@@ -75,4 +75,4 @@ async function deleteEntry(id) {
 // addEntry('boda', 17);
 // addEntry('John Doe', 30).then(() => deleteEntry(1)); // Replace with the actual ID you want to delete
 
-module.exports = { addEntry, deleteEntry };
+module.exports = { addEntryy, deleteEntryy };
