@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("2").addEventListener("click", () => {
     openDeleteEntryWindow();
   });
+
+  document.getElementById("3").addEventListener("click", () => {
+    openupdateEntryWindow();
+  });
 });
 
 function openAddEntryWindow() {
@@ -26,6 +30,10 @@ function openAddEntryWindow() {
 
 function openDeleteEntryWindow() {
   const newWindow = window.open("delete.html", "_blank");
+}
+
+function openupdateEntryWindow() {
+  const newWindow = window.open("update.html", "_blank");
 }
 
 /// client side to server side
@@ -62,3 +70,21 @@ async function deleteEntry(id) {
     console.error("Error deleting entry:", error);
   }
 }
+
+async function fetchTableContent() {
+  try {
+    const response = await fetch("http://localhost:5002/show", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log("Table content:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching table content:", error);
+  }
+}
+
+//////////////////////// if you want to add add down here\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ here

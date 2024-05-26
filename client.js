@@ -24,6 +24,9 @@ app.get("/add.html", (req, res) => {
 app.get("/delete.html", (req, res) => {
   res.sendFile(path.join(__dirname, "delete.html"));
 });
+app.get("/update.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "update.html"));
+});
 
 // Serve the script.js file
 app.get("/script.js", (req, res) => {
