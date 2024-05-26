@@ -11,7 +11,7 @@ async function openUrl(url) {
 
 // Set up the Express app
 const app = express();
-const port = 3002; // Change this port number to any free port
+const port = 3005; // Change this port number to any free port
 
 // Serve the main.html file
 app.get("/", (req, res) => {
@@ -109,10 +109,10 @@ async function deleteEntryy(id) {
 // Set up WebSocket server
 const wss = new WebSocketServer({ server });
 
-wss.on('connection', (ws) => {
-  console.log('New client connected');
+wss.on("connection", (ws) => {
+  console.log("New client connected");
 
-  ws.on('message', (message) => {
+  ws.on("message", (message) => {
     console.log(`Received message => ${message}`);
     // Broadcast message to all clients
     wss.clients.forEach((client) => {
@@ -122,15 +122,15 @@ wss.on('connection', (ws) => {
     });
   });
 
-  ws.on('close', () => {
-    console.log('Client has disconnected');
+  ws.on("close", () => {
+    console.log("Client has disconnected");
   });
 
-  ws.on('error', (error) => {
+  ws.on("error", (error) => {
     console.error(`WebSocket error: ${error}`);
   });
 
-  ws.send('Welcome to the chat!');
+  ws.send("Welcome to the chat!");
 });
 
 module.exports = { addEntryy, deleteEntryy };

@@ -1,81 +1,20 @@
-const express = require("express");
-const path = require("path");
-const axios = require("axios");
+const WebSocket = require('ws');
 
-// Function to dynamically import the 'open' module
-async function openUrl(url) {
-  const { default: open } = await import("open");
-  open(url);
-}
+const ws = new WebSocket('ws://localhost:3002'); // Ensure this matches the WebSocket server URL
 
-// Set up the Express app
-const app = express();
-const port = 3001; // You can use any port that is free
-
-// Serve the main.html file
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "main.html"));
+ws.on('open', () => {
+  console.log('Connected to the WebSocket server');
+  ws.send('Hello from clientt.js!'); // Send a string message
 });
 
-app.get("/add.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "add.html"));
+ws.on('message', (data) => {
+  console.log(`Message from server: ${data}`);
 });
 
-app.get("/delete.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "delete.html"));
-});
-app.get("/update.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "update.html"));
+ws.on('close', () => {
+  console.log('Disconnected from the WebSocket server');
 });
 
-// Serve the script.js file
-app.get("/script.js", (req, res) => {
-  res.sendFile(path.join(__dirname, "script.js"));
+ws.on('error', (error) => {
+  console.error(`WebSocket error: ${error}`);
 });
-
-// Serve the script.css file
-app.get("/script.css", (req, res) => {
-  res.sendFile(path.join(__dirname, "script.css"));
-});
-
-// Serve the video file
-app.get("/Video/:file", (req, res) => {
-  res.sendFile(path.join(__dirname, "Video", req.params.file));
-});
-
-// Start the server and open the browser
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-  openUrl(`http://localhost:${port}`);
-});
-
-// Function to add an entry
-async function addEntryy(name, age) {
-  try {
-    const response = await axios.post("http://localhost:5000/add", {
-      name,
-      age,
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Function to delete an entry
-async function deleteEntryy(id) {
-  try {
-    const response = await axios.delete("http://localhost:5001/delete", {
-      data: { id },
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// Example usage (can be commented out if not needed for initial load)
-// addEntry('boda', 17);
-// addEntry('John Doe', 30).then(() => deleteEntry(1)); // Replace with the actual ID you want to delete
-
-module.exports = { addEntryy, deleteEntryy };

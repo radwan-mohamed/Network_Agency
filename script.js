@@ -20,20 +20,70 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.getElementById("3").addEventListener("click", () => {
-    openupdateEntryWindow();
+    openUpdateEntryWindow();
+  });
+
+  document.getElementById("4").addEventListener("click", () => {
+    openCpuRamUsageWindow(); // Ensure this function is correctly defined
+  });
+
+  document.getElementById("12349").addEventListener("click", () => {
+    initiateShutdown();
+  });
+
+  document.getElementById("12350").addEventListener("click", () => {
+    openChatWindow();
   });
 });
 
 function openAddEntryWindow() {
-  const newWindow = window.open("add.html", "_blank");
+  window.open("add.html", "_blank");
 }
 
 function openDeleteEntryWindow() {
-  const newWindow = window.open("delete.html", "_blank");
+  window.open("delete.html", "_blank");
 }
 
-function openupdateEntryWindow() {
-  const newWindow = window.open("update.html", "_blank");
+function openUpdateEntryWindow() {
+  window.open("update.html", "_blank");
+}
+
+function openCpuRamUsageWindow() {
+  window.open("cpuRamUsage.html", "_blank"); // Ensure this points to the correct file
+}
+
+function openChatWindow() {
+  window.open("chat.html", "_blank");
+}
+
+async function fetchCpuRamUsage() {
+  try {
+    const response = await fetch("http://localhost:3002/cpu-ram-usage", {
+      method: "GET",
+    });
+    const data = await response.json();
+    document.getElementById("cpuRamUsage").innerHTML = `
+      <p>CPU Usage: ${data.cpuUsage}%</p>
+      <p>RAM Usage: ${data.ramUsage}%</p>
+    `;
+  } catch (error) {
+    console.error("Error fetching CPU and RAM usage:", error);
+    document.getElementById("cpuRamUsage").innerHTML =
+      "<p>Error fetching CPU and RAM usage.</p>";
+  }
+}
+
+async function initiateShutdown() {
+  try {
+    const response = await fetch("http://localhost:3002/shutdown", {
+      method: "GET",
+    });
+    const data = await response.text();
+    alert(data);
+  } catch (error) {
+    console.error("Error initiating shutdown:", error);
+    alert("Error initiating shutdown.");
+  }
 }
 
 /// client side to server side
