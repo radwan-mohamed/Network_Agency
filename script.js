@@ -86,6 +86,36 @@ async function initiateShutdown() {
   }
 }
 
+// async function fetchCpuRamUsage() {
+//   try {
+//     const response = await fetch("http://localhost:3005/cpu-ram-usage", {
+//       method: "GET",
+//     });
+//     const data = await response.json();
+//     document.getElementById("cpuRamUsage").innerHTML = `
+//       <p>CPU Usage: ${data.cpuUsage}%</p>
+//       <p>RAM Usage: ${data.ramUsage}%</p>
+//     `;
+//   } catch (error) {
+//     console.error("Error fetching CPU and RAM usage:", error);
+//     document.getElementById("cpuRamUsage").innerHTML =
+//       "<p>Error fetching CPU and RAM usage.</p>";
+//   }
+// }
+
+async function initiateShutdown() {
+  try {
+    const response = await fetch("http://localhost:3005/shutdown", {
+      method: "GET",
+    });
+    const data = await response.text();
+    alert(data);
+  } catch (error) {
+    console.error("Error initiating shutdown:", error);
+    alert("Error initiating shutdown.");
+  }
+}
+
 /// client side to server side
 async function addEntry(name, age) {
   try {
